@@ -4,58 +4,65 @@
 
 using namespace std;
 
-struct школьник {
-    string фам;
-    string имя;
-    int рост;
-    int вес;
+struct student {
+    string fam;
+    string name;
+    int height;
+    int weight;
 };
 
-int main() {
-    setlocale(LC_ALL, "RU");
-    vector<школьник> школьники = {
+vector<student> string_students() {
+    return {
         {"Андрей", "Климов", 169, 66},
         {"Макс", "Максбетов", 184, 82},
         {"Валерий", "Жмышенко", 191, 78}
     };
-
-    float мин_рост;
-    cout << "введите минимальный рост: ";
-    cin >> мин_рост;
-
-    int общ_рост = 0;
-    int общвес = 0;
+}
+void students_height(vector<student> students, float min_height) {
+    int all_height = 0;
+    int all_weight = 0;
     int count = 0;
-    школьник самый_выс = { "", "", 0, 0 };
+    student very = { "", "", 0, 0 };
 
-    cout << "школьники рост которых превышает " << мин_рост << " см:\n";
+    cout << "школьники рост которых превышает " << min_height << " см:\n";
 
-    for (int i = 0; i < школьники.size(); i++) {
-        школьник ш = школьники[i];
-        if (ш.рост > мин_рост) {
-            cout << ш.фам << " " << ш.имя
-                << " - рост: " << ш.рост
-                << " см, вес: " << ш.вес << " кг\n";
+    for (int i = 0; i < students.size(); i++) {
+        student a = students[i];
+        if (a.height > min_height) {
+            cout << a.fam << " " << a.name
+                << " - рост: " << a.height
+                << " см, вес: " << a.weight << " кг\n";
 
-            общ_рост += ш.рост;
-            общвес += ш.вес;
+            all_height += a.height;
+            all_weight += a.weight;
             count++;
 
-            if (ш.рост > самый_выс.рост) {
-                самый_выс = ш;
+            if (a.height > very.height) {
+                very = a;
             }
         }
     }
 
     if (count > 0) {
-        cout << "\nсредний рост: " << общ_рост / count << " см\n";
-        cout << "средний вес: " << общвес / count << " кг\n";
-        cout << "самый высокий школьник: " << самый_выс.фам << " " << самый_выс.имя
-            << " рост: " << самый_выс.рост << " см\n";
+        cout << "\nсредний рост: " << all_height / count << " см\n";
+        cout << "средний вес: " << all_weight / count << " кг\n";
+        cout << "самый высокий школьник: " << very.fam << " " << very.name
+            << " рост: " << very.height << " см\n";
     }
     else {
-        cout << "нет школьников, рост которых превышает " << мин_рост << " см.\n";
+        cout << "нет школьников, рост которых превышает " << min_height << " см.\n";
     }
+}
+int main() {
+    setlocale(LC_ALL, "RU");
+
+    vector<student> students = string_students();
+
+    float min_height;
+    cout << "введите минимальный рост: ";
+    cin >> min_height;
+
+    students_height(students, min_height);
 
     return 0;
 }
