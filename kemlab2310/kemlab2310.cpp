@@ -1,6 +1,7 @@
 #include <iostream>     //работа с файлом
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -11,13 +12,19 @@ struct student {
     int weight;
 };
 
-vector<student> string_students() {
-    return {
-        {"Андрей", "Климов", 169, 66},
-        {"Макс", "Максбетов", 184, 82},
-        {"Валерий", "Жмышенко", 191, 78}
-    };
+vector<student> string_students(string filename) {
+    vector<student> students;
+    ifstream file(filename);
+    student student;
+
+    while (file >> student.name >> student.fam >> student.height >> student.weight) {
+        students.push_back(student);
+    }
+
+    return students;
 }
+
+
 void students_height(vector<student> students, float min_height) {
     int all_height = 0;
     int all_weight = 0;
@@ -56,7 +63,7 @@ void students_height(vector<student> students, float min_height) {
 int main() {
     setlocale(LC_ALL, "RU");
 
-    vector<student> students = string_students();
+    vector<student> students = string_students("students.txt");
 
     float min_height;
     cout << "введите минимальный рост: ";
